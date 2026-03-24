@@ -1,0 +1,37 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: nginx-demo
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions:
+    - missingkey=error
+  generators:
+    - git:
+        repoURL: git@github.com-personal:abdalluhmostafa/k8s-lab-argocd.git
+        revision: main
+        files:
+          - path: "environments/*/apps.yaml"
+  template:
+    metadata:
+      name: "nginx-demo-{{ .env }}"
+    spec:
+      project: default
+      source:
+        repoURL: git@github.com-personal:abdalluhmostafa/k8s-lab-argocd.git
+        targetRevision: main
+        path: "components/nginx-demo"
+        helm:
+          valueFiles:
+            - "../../environments/{{ .env }}/nginx-demo-values.yaml"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: apps
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
