@@ -1,5 +1,9 @@
 nginx:
   replicaCount: 1
+  image:
+    registry: docker.io
+    repository: bitnami/nginx
+    tag: latest
   service:
     type: ClusterIP
   resources:
