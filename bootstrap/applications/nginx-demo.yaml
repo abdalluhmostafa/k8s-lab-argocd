@@ -10,7 +10,7 @@ spec:
     - missingkey=error
   generators:
     - git:
-        repoURL: git@github.com-personal:abdalluhmostafa/k8s-lab-argocd.git
+        repoURL: git@github.com:abdalluhmostafa/k8s-lab-argocd.git
         revision: main
         files:
           - path: "environments/*/apps.yaml"
@@ -20,7 +20,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: git@github.com-personal:abdalluhmostafa/k8s-lab-argocd.git
+        repoURL: git@github.com:abdalluhmostafa/k8s-lab-argocd.git
         targetRevision: main
         path: "components/nginx-demo"
         helm:
